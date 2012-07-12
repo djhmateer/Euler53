@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 using NUnit.Framework;
 
 namespace ClassLibrary1
@@ -9,28 +11,28 @@ namespace ClassLibrary1
         [Test]
         public void Factorial_Given_Then()
         {
-            int result = E53.Factorial(3);
-            Assert.AreEqual(6, result);
+            BigInteger result = E53.Factorial(3);
+            Assert.AreEqual(new BigInteger(6), result);
             result = E53.Factorial(4);
-            Assert.AreEqual(24, result);
+            Assert.AreEqual(new BigInteger(24), result);
             result = E53.Factorial(5);
-            Assert.AreEqual(120, result);
+            Assert.AreEqual(new BigInteger(120), result);
         }
 
         [Test]
         public void MethodUnderTest_scenario_expectedbehaviour()
         {
-            int result = E53.HowManyWaysToGetrFromnDigits(3,5);
-            Assert.AreEqual(10, result);
+            BigInteger result = E53.HowManyWaysToGetrFromnDigits(3,5);
+            Assert.AreEqual(new BigInteger(10), result);
             result = E53.HowManyWaysToGetrFromnDigits(2, 5);
-            Assert.AreEqual(10, result);
+            Assert.AreEqual(new BigInteger(10), result);
         }
 
         [Test]
         public void HowManyValuesGreaterThan1m_Given_ReturnCount()
         {
             int result = E53.HowManyValuesGreaterThan1m();
-            Assert.AreEqual(1, result);
+            Assert.AreEqual(4075, result);
         }
     }
 
@@ -38,12 +40,12 @@ namespace ClassLibrary1
     {
         public static int HowManyValuesGreaterThan1m()
         {
-            var list = new List<int>();
+            var list = new List<BigInteger>();
             for (int n = 1; n <= 100; n++)
             {
                 for (int r = 1; r <= n; r++)
                 {
-                    int result = HowManyWaysToGetrFromnDigits(r, n);
+                    BigInteger result = HowManyWaysToGetrFromnDigits(r, n);
                     if (result > 1000000)
                     {
                         list.Add(result);
@@ -53,19 +55,19 @@ namespace ClassLibrary1
             return list.Count;
         }
 
-        public static int HowManyWaysToGetrFromnDigits(int r, int n)
+        public static BigInteger HowManyWaysToGetrFromnDigits(int r, int n)
         {
-            int top = Factorial(n);
-            int bracket = Factorial(n - r);
-            int bottom = Factorial(r)*bracket;
-            int result = top/bottom;
+            BigInteger top = Factorial(n);
+            BigInteger bracket = Factorial(n - r);
+            BigInteger bottom = Factorial(r)*bracket;
+            BigInteger result = top/bottom;
             return result;
         }
 
-        public static int Factorial(int a)
+        public static BigInteger Factorial(int a)
         {
             if (a == 0) return 1;
-            int number = a;
+            BigInteger number = new BigInteger(a);
             for (int i = a-1; i > 1; i--)
             {
                 number = number * i;
